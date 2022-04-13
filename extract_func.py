@@ -9,28 +9,26 @@ __contact__ = "zwang@nankai.edu.cn"
 
 import idc
 
-ea = 0x40112d
-
-def extract_func(ea, file_name="func.bin"):
+def extract_func(ea, file_path="func.bin"):
+    list_byte = []
     func_start = idc.get_func_attr(ea, idc.FUNCATTR_START)
     if func_start == BADADDR:
         return -1
-    #print(hex(func_start))
+    print(hex(func_start))
     func_end = idc.get_func_attr(ea, idc.FUNCATTR_END)
     if func_end == BADADDR:
         return -1
-    #print(hex(func_end))
+    print(hex(func_end))
     n = func_end - func_start
-    #print(n)
+    print(n)
     list_byte = idc.get_bytes(func_start, n)
-    #print(hex(list_byte[0]))
+    print(hex(list_byte[0]))
     #print(hex(list_byte[1]))
     #print(hex(list_byte[2]))
-    with open(file_name, "wb") as f:
+    with open(file_path, "wb") as f:
         f.write(list_byte)
 
-
-
-
 if __name__ == '__main__':
+    """TODO： 添加三个参数：目标程序、目标序的函数地址、保存的文件名 """
+    ea = 0x40112d
     extract_func(ea, "func.bin")
